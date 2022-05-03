@@ -1,0 +1,201 @@
+% This chapter is NOT FINISHED yet, please remeber to finish it later!
+
+\section{绪论}
+
+本章将对论文选题中所提到的相关概念进行介绍，并分析其当今的研究现状，以及学术界与工业界在相关领域
+所面临的问题与挑战。本章同时会对本课题的主要研究内容及其意义进行阐述。
+
+\subsection{课题背景}
+
+\subsubsection{RISC-V开放指令集}
+\label{section:background_riscv}
+
+RISC-V开放指令集\cite{waterman2016design, waterman2014risc, waterman2015risc}又称
+第五代精简指令集，是近年来兴起的全新的、简单且开放自由的指令集架构。其于2010年在美国加州大学伯克利
+分校（University of California, Berkeley，UC Berkeley）的Krste Asanovic教授、Andrew
+Waterman教授和Yunsup Lee教授等人所开发，并得到了David Patterson教授的大力支持。不同于其
+前辈如x86和ARM等商业指令集，标榜开放的RISC-V指令集可以被任何的学术机构或是商业组织自由使用。
+得益于这样的开放特性，RISC-V指令集一经问世就受到了来自学术界和工业界的欢迎。目前，RISC-V指令集
+已经得到了诸如Intel、华为等大型科技公司的支持\cite{riscvmember}。
+
+\subsubsection{多核处理器架构}
+\label{section:background_manycore}
+
+多核处理器架构这一概念是相对于单核处理器架构而言的。相较于单核处理器架构仅在架构中集成单个处理器核
+的设计而言，多核处理器架构中会包含不止一个处理器核。随着制造工艺的发展，复杂芯片设计面临着越来越多
+的物理因素制约，想要在单个处理器上取得更好的性能表现正变得越来越困难。同时，单个处理器核也不能
+很好地提升那些符合线程级并行（Thread-Level Parallelism，TLP）的应用的性能。
+
+而多核处理器架构能够通过多个处理器核，引入新的并行度，进而提升架构整体的性能。多个处理器核的设计
+也天然地适合于提升线程级并行应用的性能。因此，多核架构的设计成为了计算机体系结构领域近些年来的
+热门研究方向。
+
+\subsubsection{存储一致性模型}
+\label{section:background_consistent_model}
+
+但多核处理器架构的设计同样也引入了新的设计上的复杂性。这其中最重要的一点就是多个处理器核之间的
+存储一致性问题。为了解决这一问题，学术界引入了多个存储一致性模型。存储一致性模型定义了多核系统
+访问存储器时所需要遵守的约束。就约束的强弱而言，存储一致性模型能够分为顺序一致性模型（Sequential
+Consistency，SC）、完全存储定序模型（Total Store Order，TSO）和松散一致性模型（Relaxed
+Memory Order，RMO）\cite{sorin2011primer}。通常来说，存储一致性模型所施加的约束越强，则
+越容易保证访存操作的正确性，但性能也相应的容易受到限制；反之，所施加的限制越弱，则越有利于提升
+性能，但访存操作的正确性也就越难保证。
+
+在现代的处理器架构设计中，为了同时兼顾性能与访存操作的正确性，处理器架构设计者们通常会选择一个
+较为折中的存储一致性模型来为处理器架构提供存储一致性约束。如x86架构的处理器就使用了完全存储定序
+模型，而RISC-V架构的设计者则使用了偏向于松散一致性模型的“RISC-V弱内存一致性模型（RISC-V Weak
+Memory Order，RVWMO）”\cite{waterman2016design,waterman2014risc,waterman2015risc}。
+
+\subsubsection{智能网卡}
+\label{section:background_smartnic}
+
+网络接口卡（Network Interface Card，NIC）是一种用于连接到以太网网络的PCIe卡。传统的NIC实现了
+主机到以太网网络的连接。而在传统NIC的基础上，智能网卡（SmartNIC）不仅提供了连接，其同时还实现了
+传统架构下CPU必须执行的网络流量处理功能。基于这样的特性，现有的工作给出了关于智能网卡的定义：
+能够卸载CPU通用处理任务的网卡\cite{pcmag_smartnic,maxiaoxiao2022survey}。
+
+部分工作已经指出，通过CPU访问内存进行数据移动的开销在很多应用中占到了极大的比例\cite{maxiaoxiao2022survey}。
+同时，随着后摩尔时代的到来，CPU的计算频率已经日渐落后于快速发展的网络速度。这都使得单纯依靠CPU
+的网络计算所得到的性能表现越发地不尽如人意。因此，能够满足高速网络处理需求智能网卡受到了来自学术界
+与工业界的密切关注。
+
+依照智能网卡的实现方式，智能网卡通常可以分为三大类\cite{bhalgat2021smartnic}。
+
+\begin{enumerate}
+  \item 基于ASIC的智能网卡。这类网卡基于ASIC设计，通常具有优秀的性能表现，且成本相对低廉。但其
+        开发成本高，可编程性也仅局限于预定义的固定功能；
+  \item 基于FPGA的智能网卡。这类网卡同样拥有良好的性能表现，但通常价格昂贵。基于FPGA的设计带来
+        更加丰富的可编程性，但FPGA开发仍然存在着一定的难度；
+  \item 基于SoC的智能网卡。这类网卡可以使用网络处理器（Network Processor，NP）来提供可编程性，
+        因此具有三类网卡中最好的可编程性与灵活性，但网络处理器的性能则难以与基于ASIC或是FPGA的
+        设计相比拟。
+\end{enumerate}
+
+\subsection{国内外研究现状}
+
+\subsubsection{RISC-V处理器}
+
+如其名字，RISC-V指令集是一种基于精简指令集（Reduced Instruction Set Computer，RISC）的
+指令集架构。这使得RISC-V指令集比起x86这样的复杂指令集（Complex Instruction Set Computer，
+CISC）而言在设计上更为精简整齐。同时，RISC-V指令集充分吸收了指令集设计的历史经验，作为一款年轻
+的指令集也可以摆脱如x86或ARM中的许多历史包袱。
+
+RISC-V指令集采用模块化设计，除了最为基本的整数指令集外，RISC-V指令集根据不同目的被划分为多个
+拓展指令集，使得厂商在设计与生产时可以根据需要自由组合。目前常被使用的拓展指令集如
+\autoref{tbl:riscv_extension}所示。
+
+\begin{generaltab}{常用RISC-V拓展指令集}{tbl:riscv_extension}
+  \begin{tabular}{cc}
+    \toprule
+    指令集简称 & 指令集表述 \\
+    \midrule
+    I & 整数指令集 \\
+    M & 整数乘除法拓展 \\
+    A & 原子指令拓展 \\
+    F & 单精度浮点型运算拓展 \\
+    D & 双精度浮点型运算拓展 \\
+    C & 压缩指令拓展 \\
+    Zicsr & 控制状态寄存器拓展 \\
+    Zifence & FENCE指令拓展 \\
+    V & 向量指令拓展 \\
+    H & Hypervisor拓展 \\
+    \bottomrule
+  \end{tabular}
+\end{generaltab}
+
+RISC-V指令集灵活的模块化设计使得其可以根据需要被应用到各种场景。从简单的工控MCU，到个人桌面PC，
+甚至是大型计算机。
+
+而RISC-V指令集的开放性也使其得到了学术界与工业界的支持。而其中也不乏影响力深远的项目。例如加州
+大学伯克利分校的RocketChip处理器\cite{asanovic2016rocket}。RocketChip处理器是RISC-V开放
+指令集下的经典实现，其提供了RV64GC指令集的良好支持，并使用加州大学伯克利分校所开发的敏捷开发语言
+Chisel所实现。目前已经有多个开源项目应用了RocketChip处理器作为研究对象\cite{rigge2018designing,
+wang2021instruction,wei2020evaluation}。而除了RocketChip外，加州大学伯克利分校还推出了
+针对高性能处理器的BOOM（Berkeley Out-of-Order Machine）处理器\cite{zhao2020sonicboom}。
+BOOM处理器是面向高性能领域的乱序三发射处理器，同样支持RV64GC指令集。在CoreMark测试中，BOOM
+能够达到RocketChip将近两倍的性能评分\cite{zhao2020sonicboom}。
+
+而除了加州大学伯克利分校开发的两款处理器外，面向不同的应用常见与开发目的，海外的其他高校与企业也
+纷纷推出了自己的RISC-V处理器核设计。如lowRISC推出的面向低功耗场景的ibex处理器\cite{lowrisc_ibex}、
+OpenHWGroup推出的兼顾能耗和性能的CVA6处理器\cite{zaruba2019cost}，以及针对面积优化的
+picorv32处理器\cite{picorv32}。
+
+而对于国内的RISC-V指令集生态俄而言，目前比较有影响力的项目则是有中科院计算所牵头设计的“香山”
+高性能处理器\cite{xiangshan_riscv}。“香山”高性能处理器采用了超标量处理器设计，且同样提供了
+RV64GC指令集的支持。目前，“香山”处理器已经通过了一轮流片迭代，并能够成功运行较为Linux操作系统。
+作为国内为数不多经过流片验证的开源超标量处理器设计，“香山”处理器在国内有着显著的技术地位，是国内
+开源芯片生态中的重要一环。
+
+\subsubsection{多核处理器架构}
+
+对于RISC-V开放指令集而言，多核处理器架构同样是生态中非常重要的一环。作为最早实现了RISC-V开放
+指令集的处理器设计，RocketChip在问世之初就提供了多核架构的设计，并提出了Tilelink总线协议来
+支持RISC-V弱内存一致性模型\cite{asanovic2016rocket}。而除了加州大学伯克利分校的工作外，如
+lowRISC和苏黎世联邦理工大学也发布如Ariane、PULP这样的工业级低功耗多核SoC设计\cite{balkind2019openpiton+,
+rossi2017energy}。同时，国内的企业与高校对于多核架构的设计也有着相当的研究\cite{manycore2013fudan,
+gs464e2015recent}，一些工作还深入地研究了多核处理器架构对于在当今时代对于软件设计者影响
+\cite{manycoretime2016recent}。
+
+\subsubsection{智能网卡}
+
+在智能网卡出现之前，传统网卡一直是计算机网络领域关注的焦点之一。在长期的发展中涌现出了不少颇具影响力
+的企业。如TP-Link就是以提供网络设备而闻名的企业，其提供了多种PCIe网卡以应对不同的应用场景需求
+\cite{tplink_website}。而国内的网络设备生产厂商则是以华为为代表\cite{huawei_website}。
+
+但受限于商业公司的不开放性，商业公司为了保持其竞争力大多不会将所研发的网卡设计开源。因此长期以来
+传统网卡领域一直缺少具有影响力的开源网卡实现。这一现象直到Corundum\cite{forencich2020corundum}
+的出现才有所改观。Corundum是加州大学圣地亚哥分校所研发的基于FPGA的网卡平台，并在测试中最高能达到
+100Gbps的优异性能。
+
+而对于智能网卡，在\ref{section:background_smartnic}节中提到，智能网卡按实现方式可以分为三类。其中，
+基于FPGA的智能网卡实现方案在学术界主要以微软研究院为代表\cite{firestone2018azure,fowers2015scalable,
+caulfield2016cloud}。微软在Catapult项目的基础上，将FPGA、CPU与数据中心网络深度融合，在SmartNIC
+领域作出了大量的工作。而部分老牌公司如Intel、Mellanox、Xilinx等也陆续推出了许多基于FPGA的智能
+网卡产品\cite{mellanox2020whitepaper,intel2020pac,intel2019d5005,xilinx2020alveou25,
+xilinx2020x2}。
+
+基于SoC的智能网卡设计则是近年来受到业界广泛认可的另一种设计模式。SoC中集成的处理器核为智能网卡
+带来了极为灵活的可编程性。结合现有的通用处理器（General Processor，GP），Mellanox推出了基于
+BlueField IPU系列可编程智能网卡，其上集成有ARM处理器阵列，可以运行如Ubuntu、CentOS等主流Linux
+发行版\cite{mellanox2020bluefield}。除此之外，业内的其他厂商也已经推出过基于通用处理器/网络
+处理器（Network Processor，NP）的智能网卡产品\cite{broadcom2020stingray,annapurna2020announce}。
+除了工业界的产品以外，学术界也在基于SoC的智能网卡设计领域作出了不少的工作\cite{di2020pspin}。
+
+目前基于ASIC的智能网卡产品则相对较少。ASIC芯片更多地则是以网络控制器的角色出现在智能网卡中，用于
+满足传统的网络协议处理需求外，并提供一定的卸载CPU处理能力和可编程性\cite{maxiaoxiao2022survey}。
+
+\subsubsection{面临的问题与挑战}
+
+\ref{section:background_manycore}节与\ref{section:background_consistent_model}节
+指出基于多处理器核的处理器架构设计能够通过增加处理器核的数量来增加架构中的并行程度，从而提升整体
+的性能。但是，在常见的应用场景（如桌面PC、服务器等）下，为了保证访存操作的的正确性，架构设计者
+在设计时通常会遵循特定的存储一致性模型。存储一致性模型的存在尽管保证了访存操作的正确性，但其同时
+也在一定程度上限制了处理器架构的性能提升。
+
+但在智能网卡的应用场景中，这样的约束是可以变得宽松的。在网络计算的应用场景下，因为数据包之间存在
+着较强的独立性，因此负责对数据包进行处理器的处理器核在访问数据时的访存操作之间也具有较强的独立性。
+这样的独立性使得智能网卡在设计所搭载的多核处理器架构时可以采用较为松散的存储一致性模型。对于基于
+SoC的智能网卡设计而言，这样的应用特性显然带来了潜在的性能提升空间。
+
+尽管如此，采用松散的存储一致性模型也会带来额外的设计上的复杂。为了避免因为宽松的存储一致性模型而
+导致与访存操作有关的错误，必须尤为慎重地设计多核处理器架构的数据通路和访存模块，以避免潜在的访存
+冲突。尽管目前已经存在一定数量的关于松散内存一致性模型的研究，但针对智能网卡这一应用场景的研究
+尚且数量较少。
+
+\subsection{课题研究的意义、内容和目标}
+
+\subsubsection{课题研究的意义}
+
+TODO
+
+\subsubsection{课题研究的内容}
+
+TODO
+
+\subsubsection{课题研究的目标}
+
+TODO
+
+\subsection{论文结构}
+
+TODO
