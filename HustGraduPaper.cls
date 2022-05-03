@@ -53,22 +53,27 @@
 \DeclareOption{notofont} {
 	\def\HGP@noto{
 		\setCJKmainfont{NotoSerifCJKsc-Regular.otf}[
+			Path = /home/retrhelo/.local/share/fonts/google-noto-cjk/serif/,
 			BoldFont = NotoSerifCJKsc-Bold.otf,
 			AutoFakeBold = false
 		]
 		\setCJKsansfont{NotoSansCJKsc-Regular.otf}[
+			Path = /home/retrhelo/.local/share/fonts/google-noto-cjk/sans/,
 			BoldFont = NotoSansCJKsc-Bold.otf,
 			AutoFakeBold = false
 		]
 		\setCJKmonofont{NotoSansMonoCJKsc-Regular.otf}[
+			Path = /home/retrhelo/.local/share/fonts/google-noto-cjk/sans/,
 			BoldFont = NotoSansMonoCJKsc-Bold.otf,
 			AutoFakeBold = false
 		]
 		\setCJKfamilyfont{zhsong}{NotoSerifCJKsc-Regular.otf}[
+			Path = /home/retrhelo/.local/share/fonts/google-noto-cjk/serif/,
 			BoldFont = NotoSerifCJKsc-Bold.otf,
 			AutoFakeBold = false
 		]
 		\setCJKfamilyfont{zhhei}{NotoSansCJKsc-Regular.otf}[
+			Path = /home/retrhelo/.local/share/fonts/google-noto-cjk/sans/,
 			BoldFont = NotoSansCJKsc-Bold.otf,
 			AutoFakeBold = false
 		]
