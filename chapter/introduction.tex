@@ -49,10 +49,10 @@ Memory Order，RVWMO）”\cite{waterman2016design,waterman2014risc,waterman2015
 \subsubsection{智能网卡}
 \label{section:background_smartnic}
 
-网络接口卡（Network Interface Card，NIC）是一种用于连接到以太网网络的PCIe卡。传统的NIC实现了
-主机到以太网网络的连接。而在传统NIC的基础上，智能网卡（SmartNIC）不仅提供了连接，其同时还实现了
-传统架构下CPU必须执行的网络流量处理功能。基于这样的特性，现有的工作给出了关于智能网卡的定义：
-能够卸载CPU通用处理任务的网卡\cite{pcmag_smartnic,maxiaoxiao2022survey}。
+网络接口控制器（Network Interface Controller，NIC）是一种用于连接到以太网网络的PCIe卡，也被称为网卡。
+传统的NIC实现了主机到以太网网络的连接。而在传统NIC的基础上，智能网卡（SmartNIC）不仅提供了
+连接，其同时还实现了传统架构下CPU必须执行的网络流量处理功能。基于这样的特性，现有的工作给出了
+关于智能网卡的定义：能够卸载CPU通用处理任务的网卡\cite{pcmag_smartnic,maxiaoxiao2022survey}。
 
 部分工作已经指出，通过CPU访问内存进行数据移动的开销在很多应用中占到了极大的比例\cite{maxiaoxiao2022survey}。
 同时，随着后摩尔时代的到来，CPU的计算频率已经日渐落后于快速发展的网络速度。这都使得单纯依靠CPU
@@ -137,6 +137,7 @@ gs464e2015recent}，一些工作还深入地研究了多核处理器架构对于
 \cite{manycoretime2016recent}。
 
 \subsubsection{智能网卡}
+\label{section:present_smartnic}
 
 在智能网卡出现之前，传统网卡一直是计算机网络领域关注的焦点之一。在长期的发展中涌现出了不少颇具影响力
 的企业。如TP-Link就是以提供网络设备而闻名的企业，其提供了多种PCIe网卡以应对不同的应用场景需求

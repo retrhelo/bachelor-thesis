@@ -1,0 +1,249 @@
+\section{方案论证}
+
+本章首先对本课题背后的系统需求进行描述，说明本课题的现实意义。随后，本章将对系统需求进行分析，分析
+满足系统需求地可行性。紧接着，本章将描述本课题所用到的各种技术开发工具，并解释这些开发工具在开发
+过程中所扮演的角色。最后，本章同时会分析给出基本的技术方案，并罗列其中所设计的关键技术。
+
+\subsection{系统需求分析}
+
+随着现代计算机网络技术的不断发展，计算机网络带宽正不断提升。而随着这样的提升，对计算机网络接口
+控制器的要求也正在不断提升。而对于网络接口控制器的一种改进是将原本由主机完成的部分计算工作卸载到
+网络接口控制器上，从而减少主机与网络接口控制器之间的数据移动，从而实现网络处理性能的提升。
+
+这样的优化思路促成了智能网卡这一概念的诞生。智能网卡允许用户通过可编程的方式，有目的性地将部分计算
+工作卸载到智能网卡上。这样的可编程性使得智能网卡能够适应新的协议与政策的发展进化，并积极对接
+快速更新的上层软件。
+
+基于SoC的智能网卡是目前智能网卡发展的一大重要方向。通过智能网卡上所集成的嵌入式处理器核，智能网卡
+能够对经过网卡的网络数据包进行处理。同时，接近于通用处理器的嵌入式处理器核则能提供最为接近软件环境
+的编程模型。这使得基于SoC的智能网卡通常拥有良好的可编程性。
+
+在基于SoC的智能网卡设计上，访存架构扮演着重要的角色。好的访存架构能够减少智能网卡上的处理器核执行
+访存操作所消耗的时间，从而加快数据处理的速度。\ref{section:paper_making_sense}节中讨论了当前
+网络数据包处理的应用场景下的相关特点，数据包之间的独立性使得核与核之间的访存操作不再具有严格的
+依赖关系。这样的应用场景使得松散多核访存架构成为了提升SoC访存操作性能的潜在方向。
+
+\subsection{系统可行性分析}
+
+基于SoC的智能网卡设计是已经经过了工业界验证的智能网卡解决方案。在\ref{section:present_smartnic}节
+中提到了多款已有的基于SoC的智能网卡实现。来自老牌工业厂商的产品表明了工业界对于这一方向的兴趣，
+一定程度上也表明了这一方向的可行性。同时，如今也存在不少来自学术界的开源实现可供参考，如PsPIN\cite{di2020pspin}等。
+
+学术界对于松散多核访存架构也已经有着相当的研究，如松散存储一致性模型这一概念也是学术界有所涉足的
+研究领域\cite{adve1996shared}。现有的RISC-V指令集架构，采用的就是被称为“RISC-V弱内存一致性
+模型”的松散存储一致性模型\cite{waterman2014risc}。因此，RISC-V指令集本身对于松散多核访存架构
+就有着良好的适应性，适合于搭建本课题所要求的松散多核访存架构。
+
+\ref{section:principle_tools}节将会详细介绍用于开发与测试的各种软硬件工具。Verilog等硬件
+描述语言为项目提供了成熟的设计开发方案。而现有的如Verilator等开源的仿真测试工具则可被用于本课题
+的仿真测试。同时，Verilator为本课题提供了基于C/C++的高层次建模方案，使得可以在进行实际的硬件
+开发之前先通过高层次行为仿真的方式对设计进行验证。
+
+\subsection{开发工具分析及选择}
+\label{section:principle_tools}
+
+\subsubsection{Verilog硬件描述语言}
+
+% The Verilog language is a hardware description language that provides a means of
+% specifying a digital system at a wide range of levels of abstraction. The language
+% supports the early conceptual stages of design with its behavioral level of
+% abstraction, and the later implementation stages with its structural abstractions.
+% The language includes hierarchical constructures, allowing the designer to
+% control a description's complexity.
+
+Verilog语言是一种硬件描述语言（Hardware Description Language，HDL），用于在不同的抽象层面
+上描述数字电路系统。Verilog语言提供了行为层面的抽象能力用于应对集成电路设计早期的概念层面的设计，
+同时还提供了结构层面的抽象用于之后的具体实现阶段\cite{thomas2008verilog}。Verilog语言所提供
+的多种抽象能力使得设计者能够使用不同的复杂度对硬件设计进行描述。
+
+% Verilog was originally designed in the winter of 1983/84 as a proprietary
+% verification/simulation product. Later, several other proprietary analysis tools
+% were developed around the language, including a fault simulation and a timing
+% analyzer. More recently, Verilog has also provided the input specification for
+% logic and behavioral synthesis tools. The Verilog language has been instrumental
+% in providing consistency across these tools. The language was originally
+% standardized as IEEE standard #1364-1995. It has recently been revised and
+% standardized as IEEE standard #1364-2001.
+
+Verilog语言最早于1983年到1984年被创造，最早在商业工具中被作为验证与仿真工具使用。该语言最初只作为
+仿真验证工具使用，而不是一门用于设计硬件的语言。但随着Verilog语言的推广与大规模应用，围绕Verilog
+语言的可综合语法和综合器也陆续被开发出来。这使得Verilog语言真正地拥有了能够在各个抽象层面描述硬件
+设计的能力。
+
+Verilog语言在1995年被IEEE标准化，编号为IEEE 1364-1995。这一版本的Verilog语言也通常被称为
+Verilog-95。之后，在2001年，IEEE再次修订了此前的Verilog语言标准，并推出了修订后的标准
+IEEE 1364-2001，也被称为Verilog-2001。Verilog-2001是目前工业界使用的最为广泛的标准，各大
+主流厂商的工具均提供了对这一标准的良好支持。Verilog语言标准的最新版本为2005年通过的IEEE 1364-2005，
+也被称为Verilog-2005。这一版的标准对Verilog-2001做了些许修正，并增加了部分新的语言特性。
+SystemVerilog语言是建立在Verilog-2005标准之上的Verilog语言的超集。其在Verilog语言的基础上，
+增加了大量有助于仿真验证的语法特性。丰富的仿真验证语法使得SystemVerilog语言很快就受到了各大
+主流电子设计自动化（Electronic Design Automation，EDA）工具厂商的青睐，并很快为SystemVerilog
+语言提供了良好的工具支持。到了2009年，SystemVerilog语言与Verilog语言正式合并成为了SystemVerilog-2009（IEEE 1800-2009）。
+SystemVerilog语言成为了事实上Verilog语言的继任者。目前最新的SystemVerilog标准为IEEE 1800-2017。
+
+尽管SystemVerilog-2017是目前最新的Verilog语言标准，但目前工业界在进行集成电路设计时仍然广泛
+地使用Verilog-2001作为设计语言标准。一方面Verilog-2001能够得到大部分开发工具的良好支持，另一
+方面现有的大量开源项目也普遍将Verilog-2001作为其代码标准。鉴于此，本课题选择使用Verilog-2001
+作为最基本的开发语言。
+
+\subsubsection{Verilator高性能仿真工具}
+
+% Verilator is invoked with parameters similar to GCC or Synopsys's VCS. It
+% "Verilates" the specified Verilog or SystemVerilog code by reading it,
+% performing lint checks, and optionally inserting assertion checks and coverage-
+% analysis points. It outputs single- or multi-threaded .cpp and .h files, the
+% "Verilated" code.
+
+% The user writes a little C++/SystemC wrapper file, which instantiates the
+% "Verilated" model of the user's top level module. These C++/SystemC files are
+% then compiled by a C++ compiler (gcc/clang/MSVC++). The resulting executable
+% performs the design simulation. Verilator also supports linking its generated
+% libraries, optionally encrypted, into other simulators.
+
+Verilator高性能仿真工具是一种类似于GCC或是新思科技的VCS的仿真工具。它能够对所提供的Verilog
+或是SystemVerilog代码进行语法检查和仿真测试，并且能够根据选择插入断言和覆盖率分析语法。
+Verilator高性能仿真工具能够将Verilog/SystemVerilog代码转换为单线程或是多线程的C++代码，并
+通过C++编译器（如GCC、CLANG或是MSVC++）将其编译为可执行程序进行仿真\cite{verilator_website}。
+
+Verilator并不会直接将Verilog代码翻译成C++或是SystemC代码。相反，其会将代码编译为一种经过优化
+且拥有更好性能的多线程模型。使用Verilator对Verilog代码进行编译得到的代码在性能表现上能够接近
+手工编写的仿真代码\cite{snyder2017verilator}，而使用Verilog显然也更容易上手开发。对比已有
+的仿真工具而言，Verilator也能取得更好的仿真速度\cite{snyder2013verilator}。
+
+更重要的是，Verilator是现有的少数开源仿真工具。目前在工业界所使用的大多数仿真测试工具都需要支付
+昂贵的使用费用，并且通常需要在服务器上部署，使用起来较为复杂。而作为开源软件，Verilator不需要
+商业证书，同时也可以直接在笔记本等一类个人电脑上运行，使用简单快捷。
+
+\subsubsection{Xilinx Vivado设计工具组}
+
+Vivado设计工具组是Xilinx公司提供的用于对HDL设计进行综合与分析的软件工具组。Vivado最早于2012
+年推出，并作为系统到集成电路级别的工具所使用。Vivado设计工具组主要包含如下四个部分
+
+\begin{enumerate}
+  \item Vivado高层次综合（High-Level Synthesis，HLS）工具。这类工具允许使用C/C++以及
+        SystemC进行开发，将软件代码直接映射到Xilinx的设备上，而不需要手工地进行寄存器传输级（
+        Register-Transfer Level，RTL）代码开发。Vivado高层次综合工具经过了大量验证，且
+        能够良好地支持C++中的类、模板类、函数和运算符重载等语法。使用高层次综合工具进行代码开发
+        被认为能够大幅度降低硬件开发难度，降低设计人员的开发成本。
+  \item Vivado仿真器是Vivado设计工具组中的另一重要组成部分。作为编译型仿真软件，Vivado仿真器
+        能够提供对于多种硬件描述语言的良好支持，如Verilog、SystemVerilog以及VHDL。此外，
+        Vivado仿真器还支持如TCL脚本、加密IP集成以及增强型验证等功能。
+  \item Vivado IP集成工具允许工程师能够快速地集成与配置来自于Xilinx IP库中的IP。通过这一工具，
+        负责集成设计的工程师能够更好地对大型片上系统中的IP核进行管理，从而加快整个系统的集成速度。
+  \item Vivado TCL Store是Vivado设计工具组中用于开发附加组件的脚本系统。这一系统使用TCL语言
+        作为脚本语言，且允许用户通过TCL脚本控制大部分的Vivado底层功能。借由TCL脚本，用户可以
+        更好地对设计开发流程进行脚本化与流程化，从而减少开发过程中的流程错误，加快项目整体的开发
+        流程。
+\end{enumerate}
+
+Vivado设计工具组提供了Xilinx 7系列及此后新产品（如UltraScale与UltraScale+系列）的工具支持。
+因此，对于本课题的FPGA验证部分将依赖于Vivado设计工具组展开。
+
+\subsubsection{Xilinx Alveo U280数据中心加速卡}
+
+Xilinx Alveo U280数据中心加速卡是Xilinx公司所推出的一款数据中心数据加速卡。其支持PCIe接口，
+且配备有8GB内存大小的高带宽内存（High-Bandwidth Memory，HBM），以及两块16GB内存的DDR4 RDIMM
+存储器。在网络接口方面，Xilinx Alveo U280提供了两个QSFP28以太网接口。Xilinx Alveo U280
+加速卡被设计用于加速内存密集型、计算密集型应用，如数据库分析以及机器学习应用等\cite{alveo2021datasheet}。
+该计算加速卡部分参数如\autoref{tbl:alveo_datasheet}所示。
+
+\begin{generaltab}{Xilinx Alveo U280加速卡部分参数\cite{alveo2021datasheet}}{tbl:alveo_datasheet}
+  \begin{tabular}{cc}
+    \toprule
+    参数名 & 具体配置 \\
+    \midrule
+    网络接口 & 2x QSFP28 \\
+    PCIe接口 & Gen3 x16, Gen4 x8, CCIX \\
+    HBM2总容量大小 & 8 GB \\
+    HBM2总带宽 & 460 GB/s \\
+    LUT数量 & 1,304K \\
+    寄存器数量 & 2,607K \\
+    Block RAM数量 & 2,016 \\
+    UltraRAM数量 & 960 \\
+    DDR总容量 & 32 GB \\
+    DDR最大数据速率 & 2400 MT/s \\
+    DDR总带宽 & 38 GB/s \\
+    \bottomrule
+  \end{tabular}
+\end{generaltab}
+
+可以看出，Xilinx Alveo U280加速卡提供了非常丰富的网络资源可供使用。同时，其上所搭载的高带宽
+存储器（HBM、DDR）也提供了充足的内存空间用于大型应用使用。HBM2所提供的高带宽则充分地保障了其上
+所搭载应用的访存性能，并提供了足够的优化空间。
+
+\subsubsection{Python脚本语言}
+
+Python是一种简单易学但功能强大的编程语言。其提供了高效的高层次数据结构以及简单明了的面向对象编程
+（Object-Oriented Programming，OOP）能力\cite{python_tutorial}。Python的语法本省贴近
+于自然语言表述，这使得Python语言很便于学习与编写。同时，Python简单易用的特点也适合被用于编写
+各类脚本以及在各个领域进行快速的应用开发工作。
+
+Python语言属于解释执行语言。借助于不同平台下的Python语言解释器，所编写的Python代码可以很无需
+太多修改就在不同的平台上运行。同时，出于性能上的优化考虑，Python解释器也可以很方便得通过C/C++
+（或是其他支持C ABI的语言）进行性能优化。这大大加速了Python在某些复杂应用下的性能表现。在拓展
+性上，Python也可以很轻松地被其他语言所拓展，或是作为某种特定应用场景下的拓展语言使用\cite{binkert2011gem5}。
+
+如上述所言，鉴于Python语言的种种优点，Python已经被广泛地应用于各种领域。在HDL开发领域，不少项目
+会选择使用Python脚本来完成一些诸如语法格式检查、代码修改等工作。此外，也存在基于Python的HDL测试
+框架可供使用\cite{cocotb_doc}。
+
+\subsubsection{Corundum}
+\label{section:principle_corundum}
+
+Corundum是一款基于开源的网络接口控制器实现。其被设计作为针对网络接口技术开发的基于FPGA的实验性
+平台。Corundum在设计时考虑了如下几个关键功能\cite{forencich2020corundum}。
+
+\begin{enumerate}
+  \item 高性能的数据通路；
+  \item 10G/25G/100G的以太网媒体接入控制（Media Access Control，MAC）端口；
+  \item 第三代PCI Express接口；
+  \item 定制的PCIe DMA引擎；
+  \item 原生高精度IEEE 1588 PTP时间戳；
+  \item 支持分散/聚集（Scatter/Gather）功能的DMA引擎、校验核卸载以及接收流哈希等功能；
+  \item 支持消息信号中断（Message Signal Interrupt，MSI）机制；
+  \item 支持可配置数量的发送队列（）、接收队列、发送完成队列、接收完成队列和事件队列；
+  \item 提供了Linux网络协议栈的良好支持。
+\end{enumerate}
+
+实验数据指出，Corundum能够达到100Gbps甚至更高的性能表现\cite{forencich2020corundum}，
+这在现有的开源网卡中是非常难得的。
+
+Corundum的关键架构如\autoref{fig:corundum_datapath}所示。出于绘图的美观起见，图中部件均
+使用英语缩写标明，其对应全称解释如下：PCIe（Peripheral Component Interconnect Express，
+高速串行计算机拓展总线接口）、TXQ（Transmit Queue，发送队列）、RXQ（Receive Queue，接收队列）、
+TXCQ（Transmit Complete Queue，发送完成队列）、RXCQ（Receive Complete Queue，接收完成
+队列）、Sched（Scheduler，调度器）、Cpl（完成写入模块）、Engress（数据包输出）、Ingress
+（数据包输入）、FIFO（First-In-First-Out，先入先出缓冲队列）、MAC（Media Access Control，
+媒体接入控制端口）。
+
+\csvgfig{corundum_datapath}{Corundum网络接口控制器关键框架图}{1.0}
+
+从\autoref{fig:corundum_datapath}可以看出，Corundum的数据通路主要分为发送通路与接收通路
+两条路径。这两条路径分别对应网络数据包的发送与接收工作。连接Corundum的主机通过PCIe总线访问发送
+通路与接收通路上的数据，从而实现网络交互功能。在Corundum内部，各数据通路上的部件则主要是通过
+AMBA总线协议\cite{arm2011axi}进行数据传输。
+
+总得来说，Corundum使用Verilog语言进行开发，其代码本身简单易读；同时其本身的设计较为简单易懂，
+数据通路清晰，内部大多使用AXI Lite等常用总线，便于进行改造和连接。因此很适合作为本课题的实现平台。
+
+\subsection{基本方案指定}
+
+% 结合\ref{section:principle_corundum}，本课题选择在Corundum的基础上进行开发、修改。这是因为
+% Corundum的数据通路较为简单清晰，便于进行修改，增加数据包处理逻辑。在Corundum的基础上，
+% 本课题的技术方案将主要分为两个部分：软件仿真与硬件开发。软件仿真部分包括使用C++、Verilog等编程
+% 语言，结合Verilator等仿真工具，对项目设计进行高层次的建模与仿真验证。
+
+% 基本的技术修改方向
+% 在Corundum基础上进行修改
+% 使用Verilator进行仿真验证
+% 使用Alveo U280开发板进行测试
+
+TODO
+
+\subsection{关键技术分析}
+
+TODO
+
+\subsection{本章小结}
+
+TODO
