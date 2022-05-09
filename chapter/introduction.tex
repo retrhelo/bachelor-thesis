@@ -148,7 +148,7 @@ gs464e2015recent}，一些工作还深入地研究了多核处理器架构对于
 的出现才有所改观。Corundum是加州大学圣地亚哥分校所研发的基于FPGA的网卡平台，并在测试中最高能达到
 100Gbps的优异性能。
 
-而对于智能网卡，在\ref{section:background_smartnic}节中提到，智能网卡按实现方式可以分为三类。其中，
+而对于智能网卡，在\autoref{section:background_smartnic}中提到，智能网卡按实现方式可以分为三类。其中，
 基于FPGA的智能网卡实现方案在学术界主要以微软研究院为代表\cite{firestone2018azure,fowers2015scalable,
 caulfield2016cloud}。微软在Catapult项目的基础上，将FPGA、CPU与数据中心网络深度融合，在SmartNIC
 领域作出了大量的工作。而部分老牌公司如Intel、Mellanox、Xilinx等也陆续推出了许多基于FPGA的智能
@@ -163,12 +163,12 @@ BlueField IPU系列可编程智能网卡，其上集成有ARM处理器阵列，�
 除了工业界的产品以外，学术界也在基于SoC的智能网卡设计领域作出了不少的工作\cite{di2020pspin}。
 
 目前基于ASIC的智能网卡产品则相对较少。ASIC芯片更多地则是以网络控制器的角色出现在智能网卡中，用于
-满足传统的网络协议处理需求外，并提供一定的卸载CPU处理能力和可编程性\cite{maxiaoxiao2022survey}。
+满足传统的网络协议处理需求，并提供一定的卸载CPU处理能力和可编程性\cite{maxiaoxiao2022survey}。
 
 \subsubsection{面临的问题与挑战}
 \label{section:problems_and_challenges}
 
-\ref{section:background_manycore}节与\ref{section:background_consistent_model}节
+\autoref{section:background_manycore}与\autoref{section:background_consistent_model}
 指出基于多处理器核的处理器架构设计能够通过增加处理器核的数量来增加架构中的并行程度，从而提升整体
 的性能。但是，在常见的应用场景（如桌面PC、服务器等）下，为了保证访存操作的的正确性，架构设计者
 在设计时通常会遵循特定的存储一致性模型。存储一致性模型的存在尽管保证了访存操作的正确性，但其同时
@@ -189,7 +189,7 @@ SoC的智能网卡设计而言，这样的应用特性显然带来了潜在的�
 \subsubsection{课题研究的意义}
 \label{section:paper_making_sense}
 
-如\ref{section:background_smartnic}所提到的，目前智能网卡主要分为三个发展方向：基于FPGA的
+如\autoref{section:background_smartnic}所提到的，目前智能网卡主要分为三个发展方向：基于FPGA的
 智能网卡设计、基于SoC的智能网卡设计以及基于ASIC的智能网卡设计。其中，基于SoC的智能网卡往往使用
 大量的嵌入式CPU处理器核来对数据包进行处理。这样的做法带来了编程性上的优势，但相对的其性能通常低于
 基于FPGA和基于ASIC的智能网卡设计。目前，工业界所设计的基于SoC的智能网卡往往选择使用基于ARM指令集
@@ -212,7 +212,7 @@ RISC-V处理器核作为智能网卡的处理器核，借此探究RISC-V指令�
 
 而本课题则认为，在智能网卡的包处理应用场景下，各个处理器核之间的访存操作相对独立，依赖性不强，适合
 使用松散存储一致性模型。松散存储一致性模型将会避免因频繁的数据移动而带来的性能影响，从而进一步地
-提升智能网卡的性能。本课题将会探究松散存储一致性模型在智能网卡上多核架构设计的可行性，并借由
+提升智能网卡的性能。本课题将会探究松散存储一致性模型在智能网卡多核架构设计下的可行性，并借由
 本课题中的实现，探究松散存储一致性模型对于智能网卡的性能影响。
 
 \subsubsection{课题研究的内容}
