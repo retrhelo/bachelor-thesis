@@ -34,7 +34,7 @@ Waterman教授和Yunsup Lee教授等人所开发，并得到了David Patterson�
 \label{section:background_consistent_model}
 
 但多核处理器架构的设计同样也引入了新的设计上的复杂性。这其中最重要的一点就是多个处理器核之间的
-存储一致性问题。为了解决这一问题，学术界引入了多个存储一致性模型。存储一致性模型定义了多核系统
+存储一致性问题。为了解决这一问题，学术界引入了多种存储一致性模型。存储一致性模型定义了多核系统
 访问存储器时所需要遵守的约束。就约束的强弱而言，存储一致性模型能够分为顺序一致性模型（Sequential
 Consistency，SC）、完全存储定序模型（Total Store Order，TSO）和松散一致性模型（Relaxed
 Memory Order，RMO）\cite{sorin2011primer}。通常来说，存储一致性模型所施加的约束越强，则
@@ -232,6 +232,9 @@ Bandwidth Memory，HBM）。
 
 % This may not be the final version of goal. May change according to the
 % implementation progress.
+
+% TODO: add a better description about this part.
+
 结合本课题的研究内容，本课题的研究目标主要可分为如下几点。
 
 \begin{enumerate}

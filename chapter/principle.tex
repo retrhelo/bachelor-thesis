@@ -215,7 +215,7 @@ Corundum的关键架构如\autoref{fig:corundum_datapath}所示。出于绘图�
 高速串行计算机拓展总线接口）、TXQ（Transmit Queue，发送队列）、RXQ（Receive Queue，接收队列）、
 TXCQ（Transmit Complete Queue，发送完成队列）、RXCQ（Receive Complete Queue，接收完成
 队列）、Sched（Scheduler，调度器）、Cpl（完成写入模块）、Engress（数据包输出）、Ingress
-（数据包输入）、FIFO（First-In-First-Out，先入先出缓冲队列）、MAC（Media Access Control，
+（数据包输入）、FIFO（First-In-First-Out，先入先出缓存队列）、MAC（Media Access Control，
 媒体接入控制端口）。
 
 \csvgfig{corundum_datapath}{Corundum网络接口控制器关键框架图}{1.0}
@@ -235,6 +235,8 @@ AMBA总线协议\cite{arm2011axi}进行数据传输。
 % 在Corundum基础上进行修改
 % 使用Verilator进行仿真验证
 % 使用Alveo U280开发板进行测试
+
+% TODO: add cache implementation part, and make the tests simpler.
 
 结合\autoref{section:principle_corundum}对于Corundum开源网卡的描述，本课题将选择在Corundum
 开源网卡的基础上进行修改，构建基于Corundum的自定义智能网卡。选择Corundum作为基础进行开发的主要
