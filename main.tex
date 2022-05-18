@@ -13,12 +13,24 @@
 \usepackage{amsmath}
 \usepackage{subcaption}
 \usepackage{svg}
+\usepackage{graphicx}
 \usepackage{xurl}
 
 \newcommand{\csvgfig}[3]{
   \begin{figure}[htb]
     \center
     \includesvg[width=#3\columnwidth]{images/#1.svg}
+    \caption{#2}
+    \label{fig:#1}
+  \end{figure}
+}
+
+\graphicspath{ {./images/} }
+
+\newcommand{\cpngfig}[3]{
+  \begin{figure}[htb]
+    \center
+    \includegraphics[width=#3\columnwidth]{#1}
     \caption{#2}
     \label{fig:#1}
   \end{figure}
@@ -55,11 +67,15 @@
 
 \begin{cnabstract}{中文关键字；中文关键字；中文关键字}
 
+% TODO: add abstract in Chinese
+
 这是摘要
 
 \end{cnabstract}
 
 \begin{enabstract}{keyword in English, keyword in English, keyword in English}
+
+% TODO: add abstract in Englished, generally translated from the Chinese version.
 
 Abstract in English
 
@@ -75,13 +91,12 @@ Abstract in English
 \input{chapter/principle.tex}
 \input{chapter/design.tex}
 \input{chapter/implementation.tex}
-% \input{chapter/verification.tex}
+\input{chapter/verification.tex}
 % \input{chapter/conclusion.tex}
-% \input{chapter/forwarding.tex}
 
 \begin{thankpage}
 
-TODO: add a thankpage following this order
+% TODO: add a thankpage following this order
 
 我首先要对我的指导老师邵志远教授表示衷心的感谢。。。
 
