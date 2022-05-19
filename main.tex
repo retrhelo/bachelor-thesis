@@ -46,19 +46,45 @@
 
 \pagenumbering{Roman}
 
-\begin{cnabstract}{中文关键字；中文关键字；中文关键字}
+\begin{cnabstract}{第五代精简指令集架构；松散多核访存架构；智能网卡；现场可编程逻辑门阵列}
 
-% TODO: add abstract in Chinese
+随着现代计算机网络技术的不断发展，计算机网络带宽正在不断提升。与之相对的则是对计算机网络接口控制器
+要求的不断提升。智能网卡作为计算机网络与计算机体系结构领域近年来出现的新兴概念，其允许用户通过
+可编程的方式，根据实际的项目需要将部分网络计算工作卸载到智能网卡上。在这其中，基于片上系统的智能
+网卡是发展的一大重要方向。片上系统架构为软件编程提供了便利，因此带来了良好的可编程性。
 
-这是摘要
+在基于片上系统的智能网卡设计中，访存架构扮演着重要的角色。网络处理器需要通过访存架构才能访问网络
+数据通路上的网络数据包。在这样的应用场景下，传统的计算机访存架构所采用的存储一致性模型无法有效地
+利用网络数据包彼此之间相互独立的数据特点，因而带来了性能上的限制。在本课题中，将使用被称为“松散
+存储一致性模型”的访存架构对片上系统进行构建，通过松散存储一致性模型较弱的一致性约束，降低多个
+处理器核之间因存储一致性约束而受到的性能限制。本课题将探究该架构对于基于片上系统的智能网卡的性能
+影响，并对所造成的影响进行分析。
 
 \end{cnabstract}
 
-\begin{enabstract}{keyword in English, keyword in English, keyword in English}
+\begin{enabstract}{RISC-V, Relaxed-Consistency Many Cores, SmartNIC, FPGA}
 
-% TODO: add abstract in Englished, generally translated from the Chinese version.
+The fast development of modern computer network has leaded to increasingly
+larger network bandwidth. The fast grow of network bandwidth creates rising need
+in Network Interface Controller (NIC). As an emerging trend of research in
+computer network and architecture, SmartNIC allows user to pratically offload
+network computing tasks to it in a programmable approach. Among the existing
+work, System-on-Chip-based (SoC-based) SmartNIC plays an important role. The SoC
+architecture aboard SmartNIC provides a familiar programming environment for
+common software developers, thus brings credible programmability compared to
+other SmartNIC designs.
 
-Abstract in English
+Memory system is the key component of the SoC-based SmartNIC design, as
+integrated Network Processors (NP) access the on-path network packages through
+memory access instructions. Memory consistency model used by traditional
+computer memory system cannot make efficient use of the data trait of being
+independent between two different network packages, thus brings unnecessary
+cost. In this paper, we creates a SoC architecture with memory system
+implementing the Relaxed Memory Order (RMO) model. Implementing a relaxed
+memory consistency model, the architecture aims to leveraging the cost of
+keeping strict memory consistency in traditional memory systems. This paper
+looks deep into the performance improvement brought by RMO memory system in
+SoC-based SmartNIC, and gives analysis on the consequences resulting from it.
 
 \end{enabstract}
 
@@ -79,18 +105,18 @@ Abstract in English
 
 % TODO: add a thankpage following this order
 
-我首先要对我的指导老师邵志远教授表示衷心的感谢。。。
+% 我首先要对我的指导老师邵志远教授表示衷心的感谢。。。
 
-然后，我要对实验室里的各位学长学姐表示诚挚的感谢。感谢朱志成、霍振飞两位学长在毕设课题完成期间
-提供的诸多帮助与指导，还要感谢吴敏康、陈佳杰、黄硕、肖靖宇和李可欣五位学长学姐。。。
+% 然后，我要对实验室里的各位学长学姐表示诚挚的感谢。感谢朱志成、霍振飞两位学长在毕设课题完成期间
+% 提供的诸多帮助与指导，还要感谢吴敏康、陈佳杰、黄硕、肖靖宇和李可欣五位学长学姐。。。
 
-我要感谢我的家人。。。
+% 我要感谢我的家人。。。
 
-我还要感谢我长期以来的朋友陆思彤、车春池、何叔恒、刘攀、杨君毅、陈锦、禹露等人。。。
+% 我还要感谢我长期以来的朋友陆思彤、车春池、何叔恒、刘攀、杨君毅、陈锦、禹露等人。。。
 
-此外，我还要感谢计卓1801班的李志高、梁昌洵、陈柏余、金明明等全体班干部成员。。。
+% 此外，我还要感谢计卓1801班的李志高、梁昌洵、陈柏余、金明明等全体班干部成员。。。
 
-最后，我要感谢我的母校华中科技大学。。。
+% 最后，我要感谢我的母校华中科技大学。。。
 
 
 \end{thankpage}

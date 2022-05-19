@@ -230,20 +230,15 @@ Bandwidth Memory，HBM）。
 
 \subsubsection{课题研究的目标}
 
-% This may not be the final version of goal. May change according to the
-% implementation progress.
-
-% TODO: add a better description about this part.
-
-结合本课题的研究内容，本课题的研究目标主要可分为如下几点。
-
-\begin{enumerate}
-  \item 设计并实现基于松散多核的RISC-V多核架构，验证架构实现的正确性；
-  \item 将多核架构进入开源网卡实现，并实现多核架构对于网络数据包的处理。验证集成的正确性；
-  \item 对集成设计的性能进行测量，对比集成前与集成后的数据包处理性能。总结归纳松散多核架构对于
-        网卡性能的影响情况。
-\end{enumerate}
+本课题的研究内容主要围绕着松散RISC-V多核访存架构展开。以开源的RISC-V处理器核为基础，本课题将
+搭建支持松散存储一致性模型的多核架构，并对架构实现进行验证与性能测试。同时，本课题将基于现有的开源
+网络接口控制器设计，对多核架构进行集成，使网络接口控制器获得可编程性。在此基础上，对设计进行验证
+与性能测试。探究松散多核架构对于网络接口控制器的性能影响。
 
 \subsection{论文结构}
 
-% TODO: add overall description about this paper and its structure.
+本论文将分为如下若干部分分别展开。在第二章中，将对本课题的需求进行分析，并结合前期调研内容，论证
+本课题在工程实践上的可行性。在第三章中，将对本课题项目的整体设计进行阐述，并明确架构中部分关键部件
+的设计思路。第四章则会重点描述本课题在工程上对于架构的实现方案，并对各类技术细节进行说明。第五章
+将列举本课题目前所做的测试工作，并对各类测试结果进行分析。最后，第六章将会对全文进行总结，并介绍
+下一步的工作方向。
