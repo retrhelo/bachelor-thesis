@@ -46,45 +46,53 @@
 
 \pagenumbering{Roman}
 
-\begin{cnabstract}{第五代精简指令集架构；松散多核访存架构；智能网卡；现场可编程逻辑门阵列}
+\begin{cnabstract}{第五代精简指令集架构；多核架构；存储一致性；访存架构；智能网卡；现场可编程逻辑门阵列}
 
-随着现代计算机网络技术的不断发展，计算机网络带宽正在不断提升。与之相对的则是对计算机网络接口控制器
-要求的不断提升。智能网卡作为计算机网络与计算机体系结构领域近年来出现的新兴概念，其允许用户通过
-可编程的方式，根据实际的项目需要将部分网络计算工作卸载到智能网卡上。在这其中，基于片上系统的智能
-网卡是发展的一大重要方向。片上系统架构为软件编程提供了便利，因此带来了良好的可编程性。
+智能网卡是计算机网络与体系结构领域近年来出现的新兴概念。根据用户实际的项目需要，智能网卡允许用户
+通过可编程的方式将网络计算工作卸载到智能网卡上。在这其中，基于片上系统的智能网卡是发展的一大重要
+方向。基于片上系统的智能网卡集成了网络处理器，由网络处理器通过访存操作获取网络数据通路上的报文，
+并进行处理。因此，访存架构在设计中扮演了重要的角色。但是传统的计算机访存架构所采用的存储一致性
+模型无法有效地利用网络数据包彼此之间相互独立的数据特点，所以在实现中带来了额外的性能开销。
 
-在基于片上系统的智能网卡设计中，访存架构扮演着重要的角色。网络处理器需要通过访存架构才能访问网络
-数据通路上的网络数据包。在这样的应用场景下，传统的计算机访存架构所采用的存储一致性模型无法有效地
-利用网络数据包彼此之间相互独立的数据特点，因而带来了性能上的限制。在本课题中，将使用被称为“松散
-存储一致性模型”的访存架构对片上系统进行构建，通过松散存储一致性模型较弱的一致性约束，降低多个
-处理器核之间因存储一致性约束而受到的性能限制。本课题将探究该架构对于基于片上系统的智能网卡的性能
-影响，并对所造成的影响进行分析。
+本课题向智能网卡片上系统的设计引入了基于松散存储一致性模型的访存架构设计。通过松散存储一致性模型
+较弱的一致性约束，降低多个网络处理器之间因存储一致性约束而收到的性能限制。基于第五代精简指令集架构，
+以及多个开源项目，本课题将实现基于松散多核访存架构的智能网卡片上系统搭建，并对所搭建的片上系统进行
+仿真测试与基于现场可编程逻辑门阵列的上板验证。
+
+本课题实现了内存架构中的缓存系统搭建，并部分完成了智能网卡片上系统的搭建工作。通过软件仿真与上板
+验证，本课题验证了实现的正确性。测试所得到的数据指出，本课题所实现的内存架构有效地提升处理器核在
+访存架构中的性能表现。尽管如此，上板测试显示目前的片上系统实现在性能上仍然存在不足，尚且有着较大
+的优化空间。
 
 \end{cnabstract}
 
-\begin{enabstract}{RISC-V, Relaxed-Consistency Many Cores, SmartNIC, FPGA}
+\begin{enabstract}{RISC-V, Many Cores, Memory Consistency, Memory System, SmartNIC, FPGA}
 
-The fast development of modern computer network has leaded to increasingly
-larger network bandwidth. The fast grow of network bandwidth creates rising need
-in Network Interface Controller (NIC). As an emerging trend of research in
-computer network and architecture, SmartNIC allows user to pratically offload
-network computing tasks to it in a programmable approach. Among the existing
-work, System-on-Chip-based (SoC-based) SmartNIC plays an important role. The SoC
-architecture aboard SmartNIC provides a familiar programming environment for
-common software developers, thus brings credible programmability compared to
-other SmartNIC designs.
+SmartNIC is an emerging concept and trend of research in computer network and
+architecture fields. It allows user to practically offload network computing
+tasks through a programmable approach. Among the existing work,
+System-on-Chip-based (SoC-based) SmartNIC plays an important role. Network
+Processors (NP) are integrated into SoC-based SmartNIC, access and handle
+on-path network packets by memory accessing operations. turning memory system
+to be a key component of SoC-based SmartNIC designs. However, the memory
+consistency model traditional computer architectures cannot make efficient use
+of the data trait of being independent between two different network packets,
+thus brings unnecessary performance cost.
 
-Memory system is the key component of the SoC-based SmartNIC design, as
-integrated Network Processors (NP) access the on-path network packages through
-memory access instructions. Memory consistency model used by traditional
-computer memory system cannot make efficient use of the data trait of being
-independent between two different network packages, thus brings unnecessary
-cost. In this paper, we creates a SoC architecture with memory system
-implementing the Relaxed Memory Order (RMO) model. Implementing a relaxed
-memory consistency model, the architecture aims to leveraging the cost of
-keeping strict memory consistency in traditional memory systems. This paper
-looks deep into the performance improvement brought by RMO memory system in
-SoC-based SmartNIC, and gives analysis on the consequences resulting from it.
+In this paper, we introduce a memory system using Relaxed Memory Order (RMO)
+model to SmartNIC SoC design. By implementing the RMO memory consistency model,
+the architecture aims to leveraging the cost of keeping strict memory
+consistency in traditional memory systems. Based on RISC-V Instruction Set
+Architecture (ISA) and many open source projects, this paper builds a SoC-based
+SmartNIC using RMO model. Simulator-based and FPGA-based tests are also
+performed for verification purposes.
+
+This paper demonstrates the building of cache system, and partly the SoC-based
+SmartNIC. By both simulator- and FPGA-based tests, we give a proper verification
+of our implementation. The cache system given in this paper significantly
+improves the performance of processors in the memory system. However, a
+FPGA-based test has shown a poor-functioning in current SoC design, indicating
+a larger space for improvement.
 
 \end{enabstract}
 
