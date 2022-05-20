@@ -95,6 +95,7 @@
 \DeclareOption{gbtcite}{\def\HGP@citebst{gbt7714-2005}}%使用GBT7714-2005样式
 \DeclareOption{gbt15cite}{\def\HGP@citebst{gbt7714-2015}}%使用GBT7714-2015样式
 \DeclareOption{tsinghuacite}{\def\HGP@citebst{thuthesis}}%使用清华样式
+\DeclareOption{hustthesis}{\def\HGP@citebst{hustthesis}}
 %查重协助（临时功能）
 \DeclareOption{chachong}{\AtBeginDocument{\chachong}}%使用查重协助
 \ProcessOptions
@@ -794,6 +795,7 @@
 		\bibliographystyle{thuthesis-numeric}
 		\def\thudot{\unskip.}
 	}
+	{hustthesis}{\bibliographystyle{hustthesis}}
 }
 
 %设置新的参考文献
