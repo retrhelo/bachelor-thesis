@@ -37,9 +37,9 @@
 就有着良好的适应性，适合于搭建本课题所要求的松散多核访存架构。
 
 \autoref{section:principle_tools}将会详细介绍用于开发与测试的各种软硬件工具。Verilog等硬件
-描述语言为项目提供了成熟的设计开发方案。而现有的如Verilator等开源的仿真测试工具则可被用于本课题
-的仿真测试。同时，Verilator为本课题提供了基于C/C++的高层次建模方案，使得可以在进行实际的硬件
-开发之前先通过高层次行为仿真的方式对设计进行验证。
+描述语言为项目提供了成熟的设计开发方案。\cite{thomas2008verilog}而现有的如Verilator等开源的
+仿真测试工具则可被用于本课题的仿真测试。同时，Verilator为本课题提供了基于C/C++的高层次建模方案，
+使得可以在进行实际的硬件开发之前先通过高层次行为仿真的方式对设计进行验证。
 
 \subsection{开发工具分析及选择}
 \label{section:principle_tools}
@@ -228,7 +228,7 @@ AMBA总线协议\cite{arm2011axi}进行数据传输。
 总得来说，Corundum使用Verilog语言进行开发，其代码本身简单易读；同时其本身的设计较为简单易懂，
 数据通路清晰，内部大多使用AXI Lite等常用总线，便于进行改造和连接。因此很适合作为本课题的实现平台。
 
-\subsection{基本方案指定}
+\subsection{技术方案设计}
 \label{section:principle_basicpath}
 
 % 基本的技术修改方向
@@ -310,7 +310,7 @@ Picorv32能够达到250MHz至450MHz的时钟频率。尽管本身结构简单，
 
 \autoref{tbl:picorv32_cpi}中的CPI为指令平均周期数（Cycle Per Instruction，CPI），而
 CPI（SP）则指的是使用单口寄存器堆文件是的指令平均周期数。由\autoref{tbl:picorv32_cpi}可以
-看出，Picorv32在性能上并不占优。在设计中，Picorv32的性能问题可能成称为设计的性能瓶颈所在。
+看出，Picorv32在性能上并不占优。Picorv32所存在的性能问题可能会成为设计的性能瓶颈所在。
 
 \subsubsection{高级可拓展接口总线协议}
 
