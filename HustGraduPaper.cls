@@ -335,7 +335,7 @@
 
 %设置标题的样式
 \RequirePackage{caption}
-\DeclareCaptionFont{hust}{\normalsize \heiti}
+\DeclareCaptionFont{hust}{\small \songti \bfseries}
 \captionsetup{labelsep=quad}
 \captionsetup{font={hust,singlespacing}}
 \captionsetup[figure]{position=bottom,skip={0pt}}
