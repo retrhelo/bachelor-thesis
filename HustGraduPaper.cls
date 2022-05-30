@@ -125,7 +125,11 @@
 %
 %用于设置非常用字体
 \RequirePackage{fontspec}
-%\setmainfont{Times New Roman}
+\setmainfont{times.ttf}[
+	Path = /home/retrhelo/.local/share/fonts/times/,
+	BoldFont = timesbd.ttf,
+	AutoFakeBold = false
+]
 %论文封面使用华文中宋
 \setCJKfamilyfont{hwzs}{STZhongsong}
 \newcommand{\huawenzhongsong}{\CJKfamily{hwzs}}
