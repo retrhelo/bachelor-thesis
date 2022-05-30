@@ -415,6 +415,7 @@
 
 %公式编号带章节
 \numberwithin{equation}{section}
+\renewcommand{\theequation}{\thesection-\arabic{equation}}
 
 %重新设置公式autoref
 %\newcommand{\equationautorefname}{等式}
