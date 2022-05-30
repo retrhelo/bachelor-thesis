@@ -127,8 +127,7 @@
 \RequirePackage{fontspec}
 \setmainfont{times.ttf}[
 	Path = /home/retrhelo/.local/share/fonts/times/,
-	BoldFont = timesbd.ttf,
-	AutoFakeBold = false
+	BoldFont = timesbd.ttf
 ]
 %论文封面使用华文中宋
 \setCJKfamilyfont{hwzs}{STZhongsong}
@@ -602,8 +601,8 @@
 	\def \cnkeyword {#1}
 	\clearpage
 	\phantomsection
-	\addcontentsline{toc}{section}{摘要}
-	\begin{center} \heiti \bfseries \zihao{-2} 摘 \hspace{2em} 要 \end{center}
+	\addcontentsline{toc}{section}{\ziju{1} 摘要}
+	\begin{center} \heiti \bfseries \zihao{-2} \ziju{1} 摘要 \end{center}
 
 }{
 	\vspace{1em}
@@ -643,7 +642,7 @@
 \renewcommand{\cftsecdotsep}{\cftdotsep} %设置Section引导点
 \renewcommand{\cftbeforesecskip}{0em} %设置段间距
 \renewcommand{\cftpartfont}{\songti \bfseries} %设置Part字体
-\renewcommand{\cftsecfont}{\songti \bfseries} %设置Section字体
+\renewcommand{\cftsecfont}{\heiti \bfseries} %设置Section字体
 
 %设置tableofcontents参数解析
 \newcommand{\arg@tableofcontents}[2]{
