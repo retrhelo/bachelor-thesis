@@ -428,6 +428,7 @@
 %
 \RequirePackage{enumitem}
 \setlist{noitemsep}
+\setlist{label={（\arabic*）}}
 
 
 %
