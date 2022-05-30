@@ -764,8 +764,8 @@
 \newenvironment{thankpage}{
 	\clearpage
 	\phantomsection
-	\addcontentsline{toc}{section}{致谢}
-	\section*{致谢}
+	\addcontentsline{toc}{section}{\ziju{1} 致谢}
+	\section*{\ziju{1} 致谢}
 }{
 	\clearpage
 }
