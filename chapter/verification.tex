@@ -114,13 +114,14 @@ Verilator高性能仿真工具还能通过函数调用生成波形图，便于�
 
 Corundum项目提供了基于Cocotb测试框架的仿真测试用例，用于对项目中各个模块单独进行仿真测试，验证
 正确性。Cocotb是基于Python语言的快速仿真测试框架，可以用于快速地生成数字电路仿真测试用例\cite{cocotb_doc}。
-结合已有的仿真测试框架，本课题对使用了支持内存访问的缓存队列的Corundum架构进行了仿真验证，并得到
-了如\autoref{fig:verif_cocotb}所示的仿真结果。
+结合已有的仿真测试框架，本课题对使用了支持内存访问的缓存队列的Corundum架构进行了仿真验证。实验
+显示对Corundum所进行的修改能够正确通过仿真测试，因此可以认为本课题所做的修改在实现上是正确且符合
+要求的。
 
-\cpngfig{verif_cocotb}{使用Cocotb对基于Corundum的访存架构进行测试}{0.8}
+% \cpngfig{verif_cocotb}{使用Cocotb对基于Corundum的访存架构进行测试}{0.8}
 
-对Corundum所进行的修改能够正确地通过Corundum项目所设立的仿真测试，因此可以认为本课题所作的修改
-在实现上是正确且符合要求的。
+% 对Corundum所进行的修改能够正确地通过Corundum项目所设立的仿真测试，因此可以认为本课题所作的修改
+% 在实现上是正确且符合要求的。
 
 \subsubsection{基于Xilinx Alveo U280的上板验证}
 
