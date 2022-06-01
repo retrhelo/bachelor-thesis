@@ -47,27 +47,60 @@ Verilator高性能仿真工具还能通过函数调用生成波形图，便于�
 处理器核设计。同时，通过调节仿真测试框架中仿真内存模型的访存时延，本课题将能得到两种设计在不同的
 外部访存速度下的性能差异。
 
-\begin{generaltab}{不同访存延时下两种设计的性能差异}{tbl:verif_pico_delay}
-  \begin{tabular}{c|cc}
-    \toprule
-    访存延时（周期） & CPI（带缓存） & CPI（不带缓存） \\
-    \midrule
-    5 & 6.82 & 13.87 \\
-    10 & 7.46 & 21.49 \\
-    15 & 8.20 & 29.84 \\
-    20 & 9.04 & 38.93 \\
-    25 & 9.94 & 48.92 \\
-    \bottomrule
-  \end{tabular}
-\end{generaltab}
+\begin{figure}[htb]
+\center
+\begin{tikzpicture}
+  \begin{axis}[
+    xlabel=访存延时（周期）,
+    ylabel=平均指令周期,
+    width=10cm,height=7cm,
+    legend pos=north west,
+  ]
+
+  \addplot[color=red,mark=x] coordinates {
+    (5, 6.82)
+    (10, 7.46)
+    (15, 8.20)
+    (20, 9.04)
+    (25, 9.94)
+  }
+  [yshift=8pt]
+  node[pos=.05] {$6.82$}
+  node[pos=.25] {$7.46$}
+  node[pos=.5] {$8.20$}
+  node[pos=.75] {$9.04$}
+  node[pos=.95] {$9.94$}
+  ;
+
+  \addplot[color=blue,mark=*] coordinates {
+    (5, 13.87)
+    (10, 21.49)
+    (15, 29.84)
+    (20, 38.93)
+    (25, 48.92)
+  }
+  [yshift=8pt]
+  node[pos=.05] {$13.87$}
+  node[pos=.25] {$21.49$}
+  node[pos=.5] {$29.84$}
+  node[pos=.75] {$38.93$}
+  node[pos=.95] {$48.92$}
+  ;
+
+  \legend{CPI（带缓存）, CPI（不带缓存）}
+  \end{axis}
+\end{tikzpicture}
+\caption{不同访存延时下两种设计的性能差异}
+\label{fig:verif_pico_delay}
+\end{figure}
 
 可以看到，随着访存延时的增加，带缓存的架构设计与不带缓存的架构设计在测试中所得到的性能表现均呈现出
 了下降态势。这是符合实验预期的。但同时从数据上也可以看出，带缓存的架构设计的CPI随着访存延时的增加
 而增加的增幅要远远小于不带缓存的架构设计。随着访存延时的增大，这两种架构设计之间的性能差异也就越来
-越大。可以看到，当访存延时达到25个周期时，带缓存的设计与不带缓存的设计之间的性能差异可以达到4倍
-以上。
+越大。可以看到，当访存延时达到25个周期时，带缓存的设计与不带缓存的设计之间的性能差异可以达到约5倍
+的性能差异
 
-因此，结合\autoref{tbl:verif_pico_delay}所给出的数据，为Picorv32增加缓存能够显著地提升其
+因此，结合\autoref{fig:verif_pico_delay}所给出的数据，为Picorv32增加缓存能够显著地提升其
 在访存系统中的性能表现。因而也更适合被用于智能网卡上的网络报文处理应用。
 
 \subsection{基于Corundum的访存架构的测试与验证}
@@ -106,10 +139,32 @@ Corundum项目提供了基于Cocotb测试框架的仿真测试用例，用于对
 对基础功能的测试将通过Linux系统自带的ping命令完成。在部署了U280板卡的主机上，使用ping命令进行
 与另一主机的连通测试。
 
-\cpngfig{verif_u280_connect}{基于U280板卡的基础功能测试}{0.8}
+% \cpngfig{verif_u280_connect}{基于U280板卡的基础功能测试}{0.8}
+\begin{figure}[htb]
+\center
+\begin{tikzpicture}
+  \begin{axis}[
+    xlabel=数据包编号,
+    ylabel=延时（ms）,
+    width=10cm,height=4.5cm,
+  ]
 
-可以看到，使用ping命令能够正确地建立与物理上相连接的另一主机之间的网络连接，因此可以认为部署的
-基础功能测试是成功的。
+  \addplot[color=blue,mark=square] coordinates {
+    (1, 0.441)
+    (2, 0.425)
+    (3, 0.424)
+    (4, 0.428)
+  }
+  ;
+
+  \end{axis}
+\end{tikzpicture}
+\caption{基于U280板卡的基础功能测试}
+\label{fig:verif_u280_connect}
+\end{figure}
+
+可以看到，使用ping命令能够正确地建立与物理上相连接的另一主机之间的网络连接，并维持相对稳定的延时。
+因此可以认为部署的基础功能测试是成功的。
 
 \subsubsubsection{性能测试与分析}
 
@@ -120,7 +175,34 @@ Corundum项目提供了基于Cocotb测试框架的仿真测试用例，用于对
 \autoref{fig:verif_u280_iperf}展示了本课题的设计在性能测试中的输出。可以看到，经过本课题修改
 后的带宽大概为2.8Gbps。而同样是在本课题的测试中，Corundum能够达到94Gbps的带宽。
 
-\cpngfig{verif_u280_iperf}{基于U280板卡的性能测试}{0.9}
+\begin{figure}[htb]
+\center
+\begin{tikzpicture}
+  \begin{axis}[
+    xlabel=测试间隔,
+    ylabel=网络带宽（Gbps）,
+    width=12cm,height=4cm,
+  ]
+
+  \addplot[color=red,mark=x] coordinates {
+    (1, 3.24)
+    (2, 2.78)
+    (3, 2.79)
+    (4, 2.79)
+    (5, 2.79)
+    (6, 2.79)
+    (7, 2.79)
+    (8, 2.79)
+    (9, 2.79)
+    (10, 2.79)
+  }
+  ;
+
+  \end{axis}
+\end{tikzpicture}
+\caption{基于U280板卡的性能测试}
+\label{fig:verif_u280_iperf}
+\end{figure}
 
 对比之下这样的结果显然并不算好。由此可见目前的实现仍然存在诸多可供完善的部分首先，目前的测试基于
 单个Picorv32处理器核进行，侧重于验证基于Corundum的访存架构修改的可行性，而非最终的性能测试；
