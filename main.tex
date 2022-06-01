@@ -54,14 +54,14 @@
 在这样的设计中，访存架构扮演了重要的角色。然而传统的计算机访存架构所采用的存储一致性模型无法有效
 地利用网络报文彼此之间相互独立的数据特点，在实现中往往会带来额外的性能开销。
 
-向智能网卡片上系统的设计引入了基于松散存储一致性模型的访存架构设计，通过松散存储一致性模型较弱的
-一致性约束，以期降低多个网络处理器之间因存储一致性约束而受到的性能限制。基于第五代精简指令集架构，
-以及多个开源项目，计划实现基于松散多核访存架构的智能网卡片上系统搭建，并对所搭建的片上系统进行
-仿真测试与基于现场可编程逻辑门阵列的上板验证。
+向智能网卡片上系统引入了基于松散存储一致性模型的访存架构设计。通过松散存储一致性模型较弱的约束，
+以便降低多个网络处理器之间因存储一致性约束而受到的性能限制。基于第五代精简指令集架构，以及多个
+开源项目，实现了基于松散多核访存架构的智能网卡片上系统搭建。同时，对所搭建的片上系统进行了仿真
+测试与基于现场可编程逻辑门阵列的上板验证。
 
-实现了内存架构中的缓存系统搭建，并部分完成了智能网卡片上系统的搭建工作。通过软件仿真与上板验证，
-验证了现有实现的正确性。测试所得到的数据指出，所实现的缓存架构能有效地提升处理器核在访存架构
-中的性能表现。尽管如此，上板测试显示目前的片上系统实现在性能上仍然存在不足，尚有较大的优化空间。
+实现了网络处理器架构的缓存系统搭建，并部分完成了智能网卡片上系统的搭建工作。通过软件仿真与上板验证，
+验证了现有实现的正确性。测试所得到的数据指出，所实现的缓存架构在25个周期的缓存延时下能够达到5倍
+的性能提升。尽管如此，对于片上系统的上板测试则只达到了修改前3.0\%的性能表现，尚有较大的优化空间。
 
 \end{cnabstract}
 
@@ -87,11 +87,12 @@ SmartNIC using RMO model. Simulator-based and FPGA-based tests are performed for
 verification purposes.
 
 This thesis demonstrates the building of cache system, and partly the SoC-based
-SmartNIC. By both simulator- and FPGA-based tests, we give a proper verification
-of our implementation. The cache system given in this thesis significantly
-improves the performance of processors in the memory system. However, a
-FPGA-based test has shown poor-functioning in current SoC design, indicating a
-large space for improvement.
+SmartNIC. By both simulator- and FPGA-based tests, I give a proper verfication
+of the implementation. The cache system given in this thesis significantly
+improves the performance of processors in the memory system by 5 times at a
+25-cycle memory latency. However, a FPGA-based test has shown poor-functioning
+in current SoC design. Achieving only 3.0\% throughput compared to the original,
+the result indicates a large space for improvement.
 
 \end{enabstract}
 
