@@ -103,7 +103,8 @@ SystemVerilog语言成为了事实上Verilog语言的继任者。目前最新的
 % performs the design simulation. Verilator also supports linking its generated
 % libraries, optionally encrypted, into other simulators.
 
-Verilator高性能仿真工具是一种类似于GCC或是新思科技的VCS的仿真工具。它能够对所提供的Verilog
+Verilator高性能仿真工具是一种类似于GCC（GNU Compiler Collection，GNU编译器集合）或是新思科技
+的VCS（Verilog Compiler Simlator，Verilog编译型仿真器）的仿真工具。它能够对所提供的Verilog
 或是SystemVerilog代码进行语法检查和仿真测试，并且能够根据选择插入断言和覆盖率分析语法。
 Verilator高性能仿真工具能够将Verilog/SystemVerilog代码转换为单线程或是多线程的C++代码，并
 通过C++编译器（如GCC、CLANG或是MSVC++）将其编译为可执行程序进行仿真\cite{verilator_website}。
@@ -133,10 +134,10 @@ Vivado设计工具组是Xilinx公司提供的用于对HDL设计进行综合与�
         Vivado仿真器还支持如TCL脚本、加密IP集成以及增强型验证等功能。
   \item Vivado IP集成工具允许工程师能够快速地集成与配置来自于Xilinx IP库中的IP。通过这一工具，
         负责集成设计的工程师能够更好地对大型片上系统中的IP核进行管理，从而加快整个系统的集成速度。
-  \item Vivado TCL Store是Vivado设计工具组中用于开发附加组件的脚本系统。这一系统使用TCL语言
-        作为脚本语言，且允许用户通过TCL脚本控制大部分的Vivado底层功能。借由TCL脚本，用户可以
-        更好地对设计开发流程进行脚本化与流程化，从而减少开发过程中的流程错误，加快项目整体的开发
-        流程。
+  \item Vivado TCL （Tool Command Language，工具命令语言） Store是Vivado设计工具组中
+        用于开发附加组件的脚本系统。这一系统使用TCL语言作为脚本语言，且允许用户通过TCL脚本控制
+        大部分的Vivado底层功能。借由TCL脚本，用户可以更好地对设计开发流程进行脚本化与流程化，
+        从而减少开发过程中的流程错误，加快项目整体的开发流程。
 \end{enumerate}
 
 Vivado设计工具组提供了Xilinx 7系列及此后新产品（如UltraScale与UltraScale+系列）的工具支持。
